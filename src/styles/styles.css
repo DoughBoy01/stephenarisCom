@@ -30,6 +30,7 @@ body {
   color: var(--text-primary);
   background: #000;
   overflow-x: hidden;
+  overflow-y: auto;
 }
 
 /* Canvas Container */

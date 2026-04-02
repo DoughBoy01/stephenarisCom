@@ -5,12 +5,14 @@ import { MeshLineManager } from './lines/MeshLineManager.js';
 import { Dock } from './components/Dock.js';
 import { AnimatedText } from './components/AnimatedText.js';
 import { AudioManager } from './audio/AudioManager.js';
+import { Sections } from './components/Sections.js';
 import { CONFIG } from './config.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import './styles/styles.css';
+import './styles/sections.css';
 
 class App {
   constructor() {
@@ -48,16 +50,19 @@ class App {
     
     this.lineManager = new MeshLineManager();
     this.scene.add(this.lineManager.createLines());
-    
+
+    // Initialize sections
+    this.sections = new Sections();
+
     // Initialize dock navigation
     this.dock = new Dock();
-    
+
     // Initialize animated text
     this.animatedText = new AnimatedText();
-    
+
     // Initialize audio
     this.audio = new AudioManager();
-    
+
     this.addEventListeners();
     this.animate();
   }

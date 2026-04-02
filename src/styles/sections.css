@@ -1,0 +1,116 @@
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.page-section {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  padding: 6rem 2rem 8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.projects-section,
+.about-section,
+.contact-section {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.section-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.section-content {
+  position: relative;
+  z-index: 1;
+}
+
+.section-title {
+  color: #fff;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.projects-section .section-content,
+.about-section .section-content,
+.contact-section .section-content {
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1.5rem;
+  padding: 3rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.dock-item.active {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .page-section {
+    padding: 4rem 1rem 6rem;
+  }
+
+  .section-title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .projects-section .section-content,
+  .about-section .section-content,
+  .contact-section .section-content {
+    padding: 1.5rem;
+    border-radius: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-title {
+    font-size: 1.75rem;
+  }
+
+  .projects-section .section-content,
+  .about-section .section-content,
+  .contact-section .section-content {
+    padding: 1rem;
+  }
+}
+
+@media (min-width: 1440px) {
+  .section-container {
+    max-width: 1600px;
+  }
+
+  .section-title {
+    font-size: 3rem;
+  }
+
+  .projects-section .section-content,
+  .about-section .section-content,
+  .contact-section .section-content {
+    padding: 4rem;
+  }
+}

@@ -1,8 +1,5 @@
-import { Modal } from './Modal.js';
 import { Timer } from './Timer.js';
 import { DockAI } from './dock/DockAI.js';
-
-import modalContent from '../content/modalContent.js';
 
 export class Dock {
   constructor(containerElement = document.body) {
@@ -44,7 +41,6 @@ export class Dock {
     this.createTopDock();
     
     this.element = this.createDock();
-    this.modal = new Modal();
     this.addEventListeners();
     this.setupResponsiveHandling();
   }
@@ -334,29 +330,15 @@ export class Dock {
   }
 
   handleNavigation(item) {
-    const label = item.getAttribute('aria-label');
-    
-    // Skip modal for AI section
-    if (label === 'Ask AI') return;
-    
-    const content = this.getContentForSection(label);
-    this.modal.setContent(content);
-    this.modal.open();
-  }
+    const href = item.getAttribute('href');
 
-  getContentForSection(section) {
-    const content = document.createElement('div');
-    const sectionData = modalContent[section.toLowerCase()];
-    
-    if (sectionData) {
-      content.innerHTML = `
-        <h2>${sectionData.title}</h2>
-        ${sectionData.content}
-      `;
-    } else {
-      content.innerHTML = '<p>Content coming soon...</p>';
+    if (!href || href === '#') return;
+
+    const sectionId = href.substring(1);
+    const section = document.getElementById(sectionId);
+
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-    
-    return content;
   }
 }
