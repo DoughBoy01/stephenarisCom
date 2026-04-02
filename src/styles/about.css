@@ -1,0 +1,284 @@
+.about-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.about-intro {
+  margin-bottom: 2rem;
+}
+
+.about-intro .lead {
+  font-size: 1.5rem;
+  line-height: 1.6;
+  color: #fff;
+  max-width: 100%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Sector Cards - With Images */
+.sectors-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  margin-bottom: 5rem;
+}
+
+.sector-card {
+  position: relative;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 0;
+  transition: all 0.3s ease;
+  overflow: visible;
+}
+
+/* Corner Markings for Sector Cards */
+.sector-card::before,
+.sector-card::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+}
+
+.sector-card::before {
+  top: -1px;
+  left: -1px;
+  border-top: 1px solid rgba(255, 255, 255, 0.4);
+  border-left: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.sector-card::after {
+  bottom: -1px;
+  right: -1px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  border-right: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.sector-card > .sector-card-content::before,
+.sector-card > .sector-card-content::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+}
+
+.sector-card > .sector-card-content::before {
+  top: -1px;
+  right: -1px;
+  border-top: 1px solid rgba(255, 255, 255, 0.4);
+  border-right: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.sector-card > .sector-card-content::after {
+  bottom: -1px;
+  left: -1px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  border-left: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.sector-card-image {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  opacity: 0.8;
+  transition: all 0.3s ease;
+}
+
+.sector-card-content {
+  padding: 2rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.7) 80%, transparent);
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.sector-card:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.sector-card:hover .sector-card-image {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.sector-card h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #fff;
+}
+
+.sector-card p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Expertise/Core Values Cards */
+.expertise-section {
+  margin-top: 5rem;
+}
+
+.expertise-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-bottom: 5rem;
+}
+
+.expertise-item {
+  position: relative;
+  text-align: center;
+  padding: 2.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 0;
+  transition: all 0.3s ease;
+  overflow: visible;
+}
+
+/* Corner Markings for Expertise Items */
+.expertise-item::before,
+.expertise-item::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+}
+
+.expertise-item::before {
+  top: -1px;
+  left: -1px;
+  border-top: 1px solid rgba(255, 255, 255, 0.4);
+  border-left: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.expertise-item::after {
+  bottom: -1px;
+  right: -1px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  border-right: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* Additional corners for expertise items */
+.expertise-item::before-top-right,
+.expertise-item::before-bottom-left {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+}
+
+.expertise-item::before-top-right {
+  top: -1px;
+  right: -1px;
+  border-top: 1px solid rgba(255, 255, 255, 0.4);
+  border-right: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.expertise-item::before-bottom-left {
+  bottom: -1px;
+  left: -1px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  border-left: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.expertise-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.expertise-item h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: #fff;
+}
+
+.expertise-item ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.expertise-item li {
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+}
+
+.expertise-item li:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .about-intro .lead {
+    font-size: 1.125rem;
+    padding: 0 1rem;
+    line-height: 1.5;
+  }
+  .sectors-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    margin-bottom: 3rem;
+    padding: 0 0.5rem;
+  }
+  .sector-card {
+    margin-bottom: 0.5rem;
+  }
+  .sector-card-content {
+    padding: 1.25rem;
+    min-height: 160px;
+  }
+  .sector-card h3 {
+    font-size: 1.125rem;
+    margin-bottom: 0.75rem;
+  }
+  .sector-card p {
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+  .expertise-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    margin-bottom: 3rem;
+  }
+  .expertise-item {
+    padding: 1.5rem;
+    text-align: left;
+  }
+  .expertise-item h3 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+  .expertise-item li {
+    font-size: 0.9375rem;
+    margin-bottom: 0.5rem;
+    padding-left: 1rem;
+    position: relative;
+  }
+  .expertise-item li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: rgba(255, 255, 255, 0.6);
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .sectors-grid {
+    gap: 1.5rem;
+  }
+  .sector-card-content {
+    padding: 1.5rem;
+  }
+  .expertise-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}

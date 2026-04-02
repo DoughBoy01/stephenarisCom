@@ -1,0 +1,328 @@
+import { Modal } from './Modal.js';
+import { Timer } from './Timer.js';
+import { DockAI } from './dock/DockAI.js';
+
+import modalContent from '../content/modalContent.js';
+
+export class Dock {
+  constructor(containerElement = document.body) {
+    this.containerElement = containerElement;
+    this.clients = [
+      'Department of Education',
+      'Salesforce',
+      'Ministry of Justice',
+      'Department of Health',
+      'Nationwide',
+      'Trust Bank',
+      'Sainsburys',
+      'House of Fraser',
+      'Waitrose',
+      'Job.com',
+      'Amplifon',
+      'Bupa',
+      'British Telecom',
+      'National Grid',
+      'Peugeot Citroen',
+      'Jaguar Land Rover',
+      'Sky',
+      'BBC',
+      'Fantasy Interactive',
+      'Softwire',
+      'Transform',
+      'Publicis',
+      'Equal Experts',
+      'Wipro',
+      'Infosys',
+      'Surrey County Council'
+    ];
+    this.ai = new DockAI();
+    
+    // Ensure createTopDock method is defined
+    this.createTopDock();
+    
+    this.element = this.createDock();
+    this.modal = new Modal();
+    this.addEventListeners();
+    this.setupResponsiveHandling();
+  }
+
+  createTopDock() {
+    const topDock = document.createElement('nav');
+    topDock.className = 'top-dock';
+    topDock.setAttribute('data-items', this.clients.length);
+    
+    const title = document.createElement('span');
+    title.className = 'top-dock-title';
+    title.textContent = 'Trusted by:';
+    topDock.appendChild(title);
+    
+    const clientsContainer = document.createElement('div');
+    clientsContainer.className = 'top-dock-clients';
+    
+    const tickerContent = document.createElement('div');
+    tickerContent.className = 'ticker-content';
+    
+    // Add original clients and clone for seamless loop
+    this.clients.forEach((client) => {
+      const span = document.createElement('span');
+      span.className = 'ticker-item';
+      span.textContent = client;
+      tickerContent.appendChild(span);
+    });
+    
+    // Clone for seamless loop
+    this.clients.forEach((client) => {
+      const span = document.createElement('span');
+      span.className = 'ticker-item';
+      span.textContent = client;
+      span.setAttribute('data-item', client);
+      tickerContent.appendChild(span);
+    });
+    
+    clientsContainer.appendChild(tickerContent);
+    topDock.appendChild(clientsContainer);
+    document.body.appendChild(topDock);
+  }
+
+  createDock() {
+    const dock = document.createElement('nav');
+    dock.className = 'dock';
+    dock.setAttribute('aria-label', 'Navigation');
+    
+    const items = [
+      { icon: '◇', label: 'Projects', href: '#projects' },
+      { icon: '□', label: 'About', href: '#about' },
+      { icon: '△', label: 'Contact', href: '#contact' },
+      { 
+        icon: '♪', 
+        label: 'Toggle Ambient',
+        href: '#',
+        classes: ['dock-audio', 'ambient']
+      },
+      {
+        icon: '🎤︎', 
+        label: 'Toggle Radio',
+        href: '#',
+        classes: ['dock-audio', 'radio']
+      }
+    ];
+
+    // Add regular items
+    items.forEach(item => {
+      const link = this.createDockItem(item);
+      if (item.classes) {
+        link.classList.add(...item.classes);
+      }
+      dock.appendChild(link);
+    });
+
+    // Append to the specified container instead of directly to body
+    this.containerElement.appendChild(dock);
+    return dock;
+  }
+
+  createDockItem({ icon, label, href, class: className }) {
+    const link = document.createElement('a');
+    link.href = href;
+    link.className = 'dock-item';
+    link.setAttribute('aria-label', label);
+
+    link.innerHTML = `
+      <span class="dock-icon">${icon}</span>
+      <span class="dock-label">${label}</span>
+    `;
+
+    return link;
+  }
+
+  setupResponsiveHandling() {
+    const handleResponsive = () => {
+      const items = this.element.querySelectorAll('.dock-item');
+
+      if (window.innerWidth <= 768) {
+        // Mobile/Responsive view (≤768px): Wider dock, taller, touch-friendly icons
+        this.element.style.width = 'auto'; // Allow natural width based on content
+        this.element.style.maxWidth = '98vw'; // Wider, centered to use space effectively
+        this.element.style.left = '50%'; // Keep centered
+        this.element.style.transform = 'translateX(-50%)'; // Maintain centering
+        this.element.style.padding = '1.2rem 1.5rem'; // Increase padding for taller/wider dock
+        this.element.style.justifyContent = 'space-between'; // Evenly distribute to use space
+        this.element.style.overflowX = 'hidden'; // Prevent overflow
+        this.element.style.flexWrap = 'nowrap'; // Prevent wrapping
+
+        // Adjust item sizes for touch-friendliness and wider dock
+        items.forEach(item => {
+          item.style.padding = 'clamp(0.5rem, 1.5vw, 0.75rem)'; // Larger padding for touch targets
+          item.style.minWidth = 'clamp(2.5rem, 6vw, 3rem)'; // Maintain touch-friendly size
+          item.style.maxWidth = '20%'; // Limit to prevent overflow
+          item.style.flex = '1 1 auto'; // Grow/shrink evenly
+          item.style.boxSizing = 'border-box';
+        });
+
+        // Adjust icon sizes for touch-friendliness and legibility
+        const icons = this.element.querySelectorAll('.dock-icon');
+        icons.forEach(icon => {
+          icon.style.fontSize = 'clamp(1.2rem, 4.5vw, 1.5rem)'; // Maintain touch-friendly size, scaled
+          icon.style.width = '100%';
+          icon.style.lineHeight = '1.5'; // Improve vertical alignment for touch targets
+        });
+
+        // Adjust timer if present for taller dock
+        const timer = this.element.querySelector('.dock-timer');
+        if (timer) {
+          timer.style.bottom = '-1.2rem'; // Adjust for taller dock
+          timer.style.fontSize = 'clamp(0.7rem, 1.5vw, 0.875rem)'; // Slightly larger timer text
+          timer.style.padding = '0.3rem 0.9rem'; // Larger padding for taller dock
+        }
+      } else {
+        // Desktop view (>768px): Centered with max-width
+        this.element.style.width = 'auto';
+        this.element.style.maxWidth = '90vw';
+        this.element.style.left = '50%';
+        this.element.style.transform = 'translateX(-50%)';
+        this.element.style.padding = '0.75rem 1.5rem';
+        this.element.style.justifyContent = 'center'; // Center items
+
+        items.forEach(item => {
+          item.style.padding = '0.5rem';
+          item.style.minWidth = '2.5rem';
+          item.style.maxWidth = '';
+          item.style.flex = '0 1 auto';
+          item.style.boxSizing = 'border-box';
+        });
+
+        const icons = this.element.querySelectorAll('.dock-icon');
+        icons.forEach(icon => {
+          icon.style.fontSize = '1.5rem';
+          icon.style.width = '';
+          icon.style.lineHeight = '';
+        });
+
+        const timer = this.element.querySelector('.dock-timer');
+        if (timer) {
+          timer.style.bottom = '0.1rem';
+          timer.style.fontSize = '0.875rem';
+          timer.style.padding = '0.25rem 0.75rem';
+        }
+      }
+
+      // Add hover effects for non-mobile devices
+      if (window.innerWidth > 768) {
+        items.forEach(item => {
+          item.addEventListener('mouseover', () => this.handleItemHover(item));
+          item.addEventListener('mouseout', () => this.handleItemOut(item));
+        });
+
+        this.element.addEventListener('mousemove', this.handleMouseMove.bind(this));
+      } else {
+        // Remove hover listeners on mobile
+        items.forEach(item => {
+          item.removeEventListener('mouseover', () => this.handleItemHover(item));
+          item.removeEventListener('mouseout', () => this.handleItemOut(item));
+        });
+        this.element.removeEventListener('mousemove', this.handleMouseMove.bind(this));
+      }
+    };
+
+    // Initial setup
+    handleResponsive();
+
+    // Responsive handling on resize
+    window.addEventListener('resize', handleResponsive);
+  }
+
+  addEventListeners() {
+    const items = this.element.querySelectorAll('.dock-item');
+    
+    // Always add hover effects, they'll only work on desktop anyway
+    items.forEach(item => {
+      item.addEventListener('mouseover', (e) => {
+        e.preventDefault();
+        this.handleItemHover(item);
+      });
+      
+      item.addEventListener('mouseout', (e) => {
+        e.preventDefault();
+        this.handleItemOut(item);
+      });
+    });
+
+    this.element.addEventListener('mousemove', (e) => this.handleMouseMove(e));
+
+    // Handle both mouse and touch events
+    items.forEach(item => {
+      // Add click handler for mobile and desktop
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
+        const href = item.getAttribute('href');
+        if (href === '#') return;
+        
+        if (!item.classList.contains('dock-audio')) {
+          this.handleNavigation(item);
+        }
+      });
+    });
+
+    // Prevent rubber-banding/bouncing on iOS
+    this.element.addEventListener('touchmove', (e) => {
+      if (this.element.offsetHeight >= this.element.scrollHeight) {
+        e.preventDefault();
+      }
+    }, { passive: false });
+  }
+
+  handleItemHover(item) {
+    item.classList.add('dock-item-hover');
+    const siblings = [...this.element.children];
+    siblings.forEach(sibling => {
+      if (sibling !== item) {
+        sibling.classList.add('dock-item-sibling');
+      }
+    });
+  }
+
+  handleItemOut(item) {
+    item.classList.remove('dock-item-hover');
+    const siblings = [...this.element.children];
+    siblings.forEach(sibling => {
+      sibling.classList.remove('dock-item-sibling');
+    });
+  }
+
+  handleMouseMove(e) {
+    const rect = this.element.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    
+    // Update mouse position for glow effects
+    document.documentElement.style.setProperty('--mouse-x', `${(mouseX / rect.width) * 100}%`);
+    document.documentElement.style.setProperty('--mouse-y', `${(mouseY / rect.height) * 100}%`);
+  }
+
+  handleNavigation(item) {
+    const label = item.getAttribute('aria-label');
+    
+    // Skip modal for AI section
+    if (label === 'Ask AI') return;
+    
+    const content = this.getContentForSection(label);
+    this.modal.setContent(content);
+    this.modal.open();
+  }
+
+  getContentForSection(section) {
+    const content = document.createElement('div');
+    const sectionData = modalContent[section.toLowerCase()];
+    
+    if (sectionData) {
+      content.innerHTML = `
+        <h2>${sectionData.title}</h2>
+        ${sectionData.content}
+      `;
+    } else {
+      content.innerHTML = '<p>Content coming soon...</p>';
+    }
+    
+    return content;
+  }
+}

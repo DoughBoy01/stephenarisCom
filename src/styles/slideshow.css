@@ -1,0 +1,129 @@
+.slideshow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.98));
+}
+
+.slideshow.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.slideshow-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.slideshow-container {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  aspect-ratio: 16/9;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.slideshow-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.slideshow-image.loaded {
+  opacity: 1;
+}
+
+.slideshow-nav {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: white;
+  font-size: 4rem;
+  cursor: pointer;
+  padding: 1rem;
+  transition: opacity 0.2s ease;
+  opacity: 0.5;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.slideshow-nav:hover {
+  opacity: 1;
+}
+
+.slideshow-nav.prev {
+  left: 2rem;
+}
+
+.slideshow-nav.next {
+  right: 2rem;
+}
+
+.slideshow-description {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 2rem;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  color: white;
+}
+
+.slideshow-description h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.slideshow-description p {
+  margin-bottom: 1rem;
+  opacity: 0.9;
+  max-width: 800px;
+}
+
+.slideshow-tags {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.slideshow-tag {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+@media (max-width: 768px) {
+  .slideshow-nav {
+    font-size: 3rem;
+  }
+  
+  .slideshow-nav.prev {
+    left: 1rem;
+  }
+  
+  .slideshow-nav.next {
+    right: 1rem;
+  }
+  
+  .slideshow-description {
+    padding: 1.5rem;
+  }
+}
